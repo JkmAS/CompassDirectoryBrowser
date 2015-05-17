@@ -68,7 +68,7 @@ Version
 ------
 
   * 1.0.0 - preparing (will log user access)
-  * 0.0.9 - current
+  * 0.9.0 - current
 
 Author
 ------
