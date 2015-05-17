@@ -8,7 +8,7 @@ COMPASS directory browser
 About
 -----
 COMPASS is a simple directory browser based on PHP, which allows you to browse 
-folders and files in your web server. The big advantage is then simple installation, 
+folders and files in your web server. The big advantage is simple installation, 
 which consists of copying one file.
 
 Installation
@@ -26,10 +26,6 @@ Features
   * Scans directories and lists the content
   * Shows the permissions, size and last modification of files
   * Suitable for browsing on your mobile
-
-Advantages
-----------
-
   * Simple installation
   * It looks like Ubuntu Terminal
 
@@ -62,7 +58,7 @@ the Internet. Be careful with placement of applications!
 
 Compass allows you to browse only the files in the current directory and 
 subdirectories. But there is no 100% guarantee that the attacker finds a bug in 
-the application, and enables browsing other directories.
+the application and enables browsing other directories.
 
 Version
 ------
