@@ -15,29 +15,29 @@ Installation
 ------------
 First read please Security!
 
-    1. Copy `compass.php` to the place, where you want to browse files and folders
-    2. Enter `yourdomain.com/pathtoapp/compass.php`
-    3. Enjoy it
+  1. Copy `compass.php` to the place, where you want to browse files and folders
+  2. Enter `yourdomain.com/pathtoapp/compass.php`
+  3. Enjoy it
 
 
 Features
 --------
 
-    * Scans directories and lists the content
-    * Shows the permissions, size and last modification of files
-    * Suitable for browsing on your mobile
+  * Scans directories and lists the content
+  * Shows the permissions, size and last modification of files
+  * Suitable for browsing on your mobile
 
 Advantages
 ----------
 
-    * Simple installation
-    * It looks like Ubuntu Terminal
+  * Simple installation
+  * It looks like Ubuntu Terminal
 
 Requirements
 ------------
 
-    * PHP 5.4+
-    * Javascript enabled
+  * PHP 5.4+
+  * Javascript enabled
 
 Support of browsers
 -------------------
@@ -67,8 +67,8 @@ the application, and enables browsing other directories.
 Version
 ------
 
-    * 1.0.0 - preparing (will log user access)
-    * 0.0.9 - current
+  * 1.0.0 - preparing (will log user access)
+  * 0.0.9 - current
 
 Author
 ------
