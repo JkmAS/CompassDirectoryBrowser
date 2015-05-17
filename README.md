@@ -48,8 +48,8 @@ Chrome   | 24+
 Safari   | 4+
 Opera    | 10+
 
-Safety
-------
+Security
+--------
 Application are using at your own risk! The author is not responsible for damage 
 caused by using the application.
 
