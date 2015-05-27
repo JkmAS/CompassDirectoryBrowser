@@ -55,7 +55,7 @@ Application are using at your own risk! The author is not responsible for damage
 caused by using the application.
 
 Application lists the content of directories and makes available it to all from 
-the Internet. Be careful with placement of applications!
+the Internet. Be careful with placement of application!
 
 Compass allows you to browse only the files in the current directory and 
 subdirectories. But there is no 100% guarantee that the attacker finds a bug in 
