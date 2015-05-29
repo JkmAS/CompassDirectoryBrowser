@@ -220,22 +220,9 @@
                 font-weight: bold;
             }
             footer{
-                position: absolute;
-                bottom: 0;
-                left: 20%;
-                right: 20%;
+                margin: 10% 0 0 0;
                 height: 50px;
                 text-align: center;			
-            }
-            @media screen and (max-device-width: 800px){
-                footer{ 
-                    display: none;
-                }
-            }
-            @media screen and (max-device-height: 400px){
-                footer{ 
-                    display: none;
-                }                
             }
             footer span{
                 color: red;
