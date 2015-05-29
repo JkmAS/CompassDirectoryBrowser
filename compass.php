@@ -8,12 +8,13 @@
     * file details (the size, last modification) 
     *
     * @author jkmas <jkmasg@gmail.com>
-    * @version 0.9.0
+    * @version 0.9.1
     * @access public
+    * @todo Method scanDir have more than one cycle
     */
     class DirScan {
 
-        const VERSION = '0.9.0';
+        const VERSION = '0.9.1';
 
         //Arrays with directories and files
         public $dirs = [];         
@@ -36,10 +37,10 @@
 
         /**
         * Allow scan only subdirectories
-        * @access private
+        * @access public
         * @param String $path Path
         */
-        private function controlPermissions($path){
+        public function controlPermissions($path){
             //if possible threat, redirect
             if(preg_match("/.*\.\..*/", $path)){
                 header('Location: ' . ".", true, 302);
@@ -49,10 +50,10 @@
 
         /**
         * Scan directory, fill arrays
-        * @access private
+        * @access public
         * @todo Finish checking, if the directory exists  
         */
-        private function scanDir(){
+        public function scanDir(){
             //search __DIR__ or __DIR__ with GET parameters							
             $search = !empty($_GET['dir']) ? __DIR__.$_GET['dir'] : __DIR__;
                 
@@ -72,15 +73,15 @@
             for ($i=0;$i<count($output);$i++){
                 //find directory (parameters from $search with / and find result)
                 if(is_Dir($search.DIRECTORY_SEPARATOR.$output[$i]) && $output[$i]!== null){
-                    $dirPath = "?dir=".$this->__getDirPaths();
+                    $dirPath = "?dir=".urlencode($this->__getDirPaths());
                     //remove last directory
                     if ($output[$i] === ".."){
                         $dirname = dirname($_GET['dir']);
                         //if is only / or GET is null change to nothing
-                        $dirPath = $dirname==DIRECTORY_SEPARATOR | empty($dirname) ? '' : "?dir=".$dirname;                    
+                        $dirPath = $dirname==DIRECTORY_SEPARATOR | empty($dirname) ? '' : "?dir=".urlencode($dirname);             
                     } else {
                         //if is not "..", we want path to new directory ($output)
-                        $dirPath = $dirPath.DIRECTORY_SEPARATOR.$output[$i];
+                        $dirPath = $dirPath.urlencode(DIRECTORY_SEPARATOR.$output[$i]);
                     }                      
                     $this->dirs[$output[$i]] = $dirPath;
                     $output[$i] = null;
@@ -89,7 +90,7 @@
 
             foreach ($output as $value) {
                 if (!empty($value)){         
-                    $path = $this->__getFilePaths();                
+                    $path = $this->__getFilePaths().$value;   
                     $relativePath = $this->__getRelativeFilePath().$value;
 
                     //get size of file and datetime of last modified
@@ -109,19 +110,19 @@
 
         /**
         * Make breadcrumbs for better navigation
-        * @access private 
+        * @access public 
         */
-        private function makeBreadCrumbs(){
+        public function makeBreadCrumbs(){
             $this->breadCrumbs = !empty($_GET['dir']) ? explode("/",$_GET['dir']) : [""];
         }
 
         /**
         * Make size of file human friendly
-        * @access private
+        * @access public
         * @param int $size Size of file
         * @return String size of file with units
         */
-        private function unitsConversion($size){
+        public function unitsConversion($size){
             //log 
             $base = log($size, 1024);
             $units = ['B','KB', 'MB', 'GB', 'TB'];
@@ -133,34 +134,34 @@
 
         /**
         * Get permission in this form rwxrwxrwx
-        * @access private
+        * @access public
         * @param string $path Path to file/directory
         * @return Permission
         */
-        private function showPermission($path){
-            $perms = [0 => "---",1 => "--x",2 => "-w-",
-                      3 => "-wx",4 => "r--",5 => "r-x",
-                      6 => "rw-",7 => "rwx"];
+        public function showPermission($path){
+            $perms = ["---","--x","-w-",
+                      "-wx","r--","r-x",
+                      "rw-","rwx"];
             $get = substr(sprintf('%o', fileperms($path)), -4);
             return $perms[$get[1]].$perms[$get[2]].$perms[$get[3]];
         }
 
         /**
         * GETTERS of paths of files and directories, relative paths from PHP running script
-        * @access private
+        * @access public
         */
-        private function __getFilePaths(){
+        public function __getFilePaths(){
             //Set server REQUEST_URI without compass.php.*
             $replacePath = !empty($_GET['dir']) ? $_GET['dir'].DIRECTORY_SEPARATOR : DIRECTORY_SEPARATOR;
             return preg_replace("/\/compass\.php.*/", 
                                  $replacePath, 
                                  $_SERVER[REQUEST_URI]);
         }
-        private function __getDirPaths(){
+        public function __getDirPaths(){
             //If isset $_GET, return path of directory
             return $dirPath = !empty($_GET['dir']) ? $_GET['dir'] : null;        
         }
-        private function __getRelativeFilePath(){
+        public function __getRelativeFilePath(){
             //Return path from running PHP script
             return empty($_GET['dir']) ? 
                    ".".DIRECTORY_SEPARATOR : 
@@ -260,11 +261,9 @@
         <noscript>The application requires JavaScript enabled!</noscript>
         <table>
             <caption>
-                <?php                 
-                    foreach ($dirScan->breadCrumbs as $breadCrumb) {
-                        echo "<b> ".$breadCrumb." </b>/";
-                    }
-                ?>            
+                <?php foreach($dirScan->breadCrumbs as $crumb): ?>
+                <b><?= htmlspecialchars($crumb,ENT_QUOTES) ?></b>/
+                <?php endforeach; ?>            
             </caption>
             <thead>
                 <tr>
@@ -274,36 +273,33 @@
                     <th>Last modified</th>
                 </tr>
             </thead>
-            <tbody>
-                <?php                     
-                    foreach ($dirScan->dirs as $name => $path) { 
-                        if ($name === null){
-                            continue;
-                        }     
-                        if ($name === ".."){                             
-                            $name = "&#8624;..";
-                        }
-                        $html = "<tr class='dir' data-href='compass.php".$path."' ";
-                        $html .= "onclick='search(this); return false;'>\n";
-                        $html .= "<td>".$name."</td>\n";
-                        $html .= "<td>-</td>\n";
-                        $html .= "<td>-</td>\n";
-                        $html .= "<td>-</td>\n";
-                        $html .= "</tr>\n";
-                        echo $html;
-                    }      	
+            <tbody>                           
+                <?php foreach ($dirScan->dirs as $name => $path): ?> 
+                    <?php if ($name === null): ?>
+                        <?php continue ?> 
+                    <?php endif; ?>      
+                    <tr class="dir" data-href="compass.php<?= $path ?>" onclick="search(this); return false;">
+                        <td>                               
+                            <?php if ($name === ".."): ?>
+                                <?= "&#8624;.." ?>
+                            <?php else: ?>
+                                <?= htmlspecialchars($name,ENT_QUOTES) ?>
+                            <?php endif; ?>    
+                        </td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                <?php endforeach; ?>
                        
-                    foreach ($dirScan->files as $name => $details) {                          
-                        $html = "<tr class='file' data-href='".$details[0].$name."' ";
-                        $html .= "onclick='search(this); return false;'>\n";
-                        $html .= "<td>".$name."</td>\n";
-                        $html .= "<td>".$details[1]."</td>\n";
-                        $html .= "<td title='owner-group-other users (r-read, w-write, x-execute)'>".$details[2]."</td>\n";
-                        $html .= "<td>".$details[3]."</td>\n";
-                        $html .= "</tr>\n";
-                        echo $html;
-                    }
-                ?>
+                <?php foreach ($dirScan->files as $name => $details): ?> 
+                    <tr class="file" data-href="<?= htmlspecialchars($details[0], ENT_QUOTES) ?>" onclick="search(this); return false;">
+                        <td><?= htmlspecialchars($name,ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($details[1],ENT_QUOTES) ?></td>
+                        <td title="owner-group-other users (r-read, w-write, x-execute)"><?= htmlspecialchars($details[2],ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($details[3],ENT_QUOTES) ?></td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table> 
         <footer>
