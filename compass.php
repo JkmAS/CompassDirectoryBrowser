@@ -8,13 +8,13 @@
     * file details (the size, last modification) 
     *
     * @author jkmas <jkmasg@gmail.com>
-    * @version 0.9.1
+    * @version 0.9.2
     * @access public
     * @todo Method scanDir have more than one cycle
     */
     class DirScan {
 
-        const VERSION = '0.9.1';
+        const VERSION = '0.9.2';
 
         //Arrays with directories and files
         public $dirs = [];         
@@ -76,7 +76,7 @@
                     $dirPath = "?dir=".urlencode($this->__getDirPaths());
                     //remove last directory
                     if ($output[$i] === ".."){
-                        $dirname = dirname($_GET['dir']);
+                        $dirname = !empty($_GET['dir']) ? dirname($_GET['dir']) : null;
                         //if is only / or GET is null change to nothing
                         $dirPath = $dirname==DIRECTORY_SEPARATOR | empty($dirname) ? '' : "?dir=".urlencode($dirname);             
                     } else {
@@ -155,7 +155,7 @@
             $replacePath = !empty($_GET['dir']) ? $_GET['dir'].DIRECTORY_SEPARATOR : DIRECTORY_SEPARATOR;
             return preg_replace("/\/compass\.php.*/", 
                                  $replacePath, 
-                                 $_SERVER[REQUEST_URI]);
+                                 $_SERVER['REQUEST_URI']);
         }
         public function __getDirPaths(){
             //If isset $_GET, return path of directory
