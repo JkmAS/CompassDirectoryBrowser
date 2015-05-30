@@ -263,7 +263,7 @@
         <table>
             <caption>
                 <?php foreach($dirScan->breadCrumbs as $crumb): ?>
-                <b><?= htmlspecialchars($crumb,ENT_QUOTES) ?></b>/
+                <b><?= htmlspecialchars($crumb,ENT_QUOTES) . DIRECTORY_SEPARATOR ?></b>
                 <?php endforeach; ?>            
             </caption>
             <thead>
