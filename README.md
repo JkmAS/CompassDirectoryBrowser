@@ -26,6 +26,7 @@ Features
 
   * Scans directories and lists the content
   * Shows the permissions, size and last modification of files
+  * Count the number rows content in files
   * Suitable for browsing on your mobile
   * Simple installation
   * It looks like Ubuntu Terminal
