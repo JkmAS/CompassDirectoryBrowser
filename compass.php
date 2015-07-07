@@ -49,6 +49,17 @@
         }
 
         /**
+         * Count the number of rows of files only
+         * 
+         * @param String $path Path
+         * @return int $nb_line
+         */
+        public function nbLine($path) {
+            $nb_Line = file_get_contents($path);
+            return substr_count($nb_Line, "\n");
+        }
+
+        /**
         * Scan directory, fill arrays
         * @access public
         * @todo Finish checking, if the directory exists  
@@ -98,12 +109,15 @@
 
                     //get permissions
                     $perms = $this->showPermission($relativePath);
+                
+                    //Get nb line
+                    $nbLine = $this->nbLine($relativePath);
 
                     //not calculate 0
                     $size = $fileSize===0 ? "0B" : $this->unitsConversion($fileSize);
                     $lastModified = date("F d Y H:i:s", filemtime($relativePath));
 
-                    $this->files[$value] = [$path,$size,$perms,$lastModified]; 
+                    $this->files[$value] = [$path,$size,$perms,$lastModified, $nbLine]; 
                 }
             }
         }  
@@ -249,7 +263,7 @@
         <table>
             <caption>
                 <?php foreach($dirScan->breadCrumbs as $crumb): ?>
-                <b><?= htmlspecialchars($crumb,ENT_QUOTES) ?></b>/
+                <b><?= htmlspecialchars($crumb,ENT_QUOTES) . DIRECTORY_SEPARATOR ?></b>
                 <?php endforeach; ?>            
             </caption>
             <thead>
@@ -258,6 +272,7 @@
                     <th>Size</th>
                     <th>Permissions</th>
                     <th>Last modified</th>
+                    <th>Line</th>
                 </tr>
             </thead>
             <tbody>                           
@@ -276,6 +291,7 @@
                         <td>-</td>
                         <td>-</td>
                         <td>-</td>
+                        <td>-</td>
                     </tr>
                 <?php endforeach; ?>
                        
@@ -285,6 +301,7 @@
                         <td><?= htmlspecialchars($details[1],ENT_QUOTES) ?></td>
                         <td title="owner-group-other users (r-read, w-write, x-execute)"><?= htmlspecialchars($details[2],ENT_QUOTES) ?></td>
                         <td><?= htmlspecialchars($details[3],ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($details[4], ENT_QUOTES) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
