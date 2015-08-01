@@ -25,12 +25,12 @@ First read please Security!
   
 Optional settings:
 
-  Logging
+Logging
   4. Uncomment logging: `new AccessLogger()`
   5. Set path to logfile `const PATH_TO_LOG_FILE = ''`
   6. Set name of logfile `const LOG_FILE_NAME = 'compass.log'`, by default is set to compass.log
-  
-  Access only from specified IP addresses
+
+Access only from specified IP addresses
   7. Set IP addresses with access to the application, separate by comma: `const IP_ADDRESS_WITH_PERMISSION = ''`
 
 
