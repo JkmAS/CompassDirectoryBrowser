@@ -19,7 +19,7 @@ About extended version
 -----
 
 This <a href="https://github.com/JkmAS/CompassDirectoryBrowser/tree/extended">extended version</a> creates coauthors. Version provides additional 
-functionality compared to the basic version. C
+functionality compared to the basic version. 
 
 Installation
 ------------
