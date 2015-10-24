@@ -15,6 +15,12 @@ which consists of copying one file.
 Optional functionality is logging access of users of application and 
 authorizations of access only from specified IP addresses.
 
+About extended version
+-----
+
+This <a href="https://github.com/JkmAS/CompassDirectoryBrowser/tree/extended">extended version</a> creates coauthors. Version provides additional 
+functionality compared to the basic version. C
+
 Installation
 ------------
 First read please Security!
