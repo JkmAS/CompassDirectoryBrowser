@@ -11,6 +11,7 @@
     * file details (the size, last modification) 
     *
     * @author jkmas <jkmasg@gmail.com>
+    * @co-author slWsu <https://github.com/slWsu>
     * @version 0.9.5
     * @license http://www.opensource.org/licenses/mit-license.html  MIT License
     * @access public
@@ -101,12 +102,15 @@
 
                     //get permissions
                     $perms = $this->showPermission($relativePath);
+                    
+                    //Get number of lines
+                    $nbLine = $this->__getNumberLines($relativePath);
 
                     //not calculate 0
                     $size = $fileSize===0 ? "0B" : $this->unitsConversion($fileSize);
                     $lastModified = date("F d Y H:i:s", filemtime($relativePath));
 
-                    $this->files[$value] = [$path,$size,$perms,$lastModified]; 
+                    $this->files[$value] = [$path,$size,$perms,$lastModified,$nbLine];  
                 }
             }
         }  
@@ -148,6 +152,18 @@
             $get = substr(sprintf('%o', fileperms($path)), -4);
             return $perms[$get[1]].$perms[$get[2]].$perms[$get[3]];
         }
+        
+        /**
+         * Count the number of rows of files only
+         * 
+         * @param String $path Path
+         * @return int $nb_line
+         */
+        public function __getNumberLines($path) {
+            $nb_Line = file_get_contents($path);
+            return substr_count($nb_Line, "\n");
+        }
+
 
         /**
         * GETTERS of paths of files and directories, relative paths from PHP running script
@@ -409,6 +425,7 @@
                     <th>Size</th>
                     <th>Permissions</th>
                     <th>Last modified</th>
+                    <th>Line</th>
                 </tr>
             </thead>
             <tbody>                           
@@ -427,6 +444,7 @@
                         <td>-</td>
                         <td>-</td>
                         <td>-</td>
+                        <td>-</td>
                     </tr>
                 <?php endforeach; ?>
                        
@@ -436,6 +454,7 @@
                         <td><?= htmlspecialchars($details[1],ENT_QUOTES) ?></td>
                         <td title="owner-group-other users (r-read, w-write, x-execute)"><?= htmlspecialchars($details[2],ENT_QUOTES) ?></td>
                         <td><?= htmlspecialchars($details[3],ENT_QUOTES) ?></td>
+                        <td><?= htmlspecialchars($details[4], ENT_QUOTES) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
