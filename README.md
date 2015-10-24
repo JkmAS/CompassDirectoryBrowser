@@ -3,7 +3,7 @@ COMPASS directory browser
 ![stable](https://img.shields.io/badge/stable-0.9.5-blue.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) 
 
 <p align="center">
-  <img src="https://github.com/JkmAS/CompassDirectoryBrowser/blob/master/promo.png" alt="Compass Directory browser"/>
+  <img src="https://github.com/JkmAS/CompassDirectoryBrowser/blob/master/promo_extended.png" alt="Compass Directory browser"/>
 </p>
 
 About
@@ -14,6 +14,12 @@ which consists of copying one file.
 
 Optional functionality is logging access of users of application and 
 authorizations of access only from specified IP addresses.
+
+About extended version
+-----
+
+This extended version creates coauthors. Version provides additional 
+functionality compared to the basic version.
 
 Installation
 ------------
@@ -44,6 +50,7 @@ Features
   * It looks like Ubuntu Terminal
   * Logging
   * Access only from specified IP addresses
+  * (Only extended version) Count the number of lines in files
 
 Logfile
 -------
