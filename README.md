@@ -3,7 +3,7 @@ COMPASS directory browser
 ![stable](https://img.shields.io/badge/stable-0.9.5-blue.svg) ![license](https://img.shields.io/badge/license-MIT-brightgreen.svg) 
 
 <p align="center">
-  <img src="https://github.com/JkmAS/CompassDirectoryBrowser/blob/master/promo_extended.png" alt="Compass Directory browser"/>
+  <img src="https://github.com/JkmAS/CompassDirectoryBrowser/blob/extended/promo_extended.png" alt="Compass Directory browser"/>
 </p>
 
 About
