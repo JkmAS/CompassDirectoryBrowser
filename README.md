@@ -63,7 +63,7 @@ access is not limited!
 Requirements
 ------------
 
-  * PHP 5.4+
+  * PHP 5.5+ (PHP 5.4 only without class AccessLogger - class must be deleted from compass.php)
   * Javascript enabled
 
 Support of browsers
