@@ -96,7 +96,6 @@ Full functionality is not guaranteed.
 Version
 ------
 
-  * 1.0.0 - preparing - update option 
   * 0.9.5 - current - logging
   * 0.9.0 - initial release
 
